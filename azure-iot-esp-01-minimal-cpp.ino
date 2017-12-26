@@ -82,9 +82,10 @@ void setup() {
 
 void loop() {
     WiFiUDP Udp;
+
+#ifdef USE_IOT_HUB
     time_t epoch = ntpTime();
         
-#ifdef USE_IOT_HUB
     IoTHub client(HOSTNAME, SSL_FINGERPRINT, SHARED_ACCESS_KEY);
 #endif
     String payload = buildPayload();
