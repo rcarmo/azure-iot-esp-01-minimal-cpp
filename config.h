@@ -17,4 +17,5 @@ const int DHT_PIN=2; // GPIO2
 const int SLEEP_INTERVAL=5;
 
 #define USE_DEEP_SLEEP
-#define DEBUG
+#define USE_MULTICAST
+#define USE_IOT_HUB

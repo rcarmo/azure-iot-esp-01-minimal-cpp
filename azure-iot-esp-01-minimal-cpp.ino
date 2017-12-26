@@ -84,19 +84,23 @@ void loop() {
     WiFiUDP Udp;
     time_t epoch = ntpTime();
         
+#ifdef USE_IOT_HUB
     IoTHub client(HOSTNAME, SSL_FINGERPRINT, SHARED_ACCESS_KEY);
+#endif
     String payload = buildPayload();
     Serial.println(payload);
 
-#ifdef DEBUG
+#ifdef USE_MULTICAST
     // Send payload as multicast packet for local monitoring
     Udp.beginPacketMulticast(MULTICAST_ADDRESS, MULTICAST_UDP_PORT, WiFi.localIP());
     Udp.write(payload.c_str());
     Udp.endPacket();
 #endif
 
+#ifdef USE_IOT_HUB
     // Send to IoTHub
     client.sendMessage(DEVICE_ID, payload, epoch);
+#endif
 #ifndef USE_DEEP_SLEEP
     delay(1000 * SLEEP_INTERVAL);
 #endif
